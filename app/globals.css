@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark mode configuration for Tailwind 4 */
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Configuración de dark mode basado en clase para Tailwind 4 */
+@variant dark (&:where(.dark, .dark *));
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.slide-in-from-bottom-4 {
+  animation: slideInFromBottom 0.5s ease-out;
+}
+
+.slide-in-from-top-4 {
+  animation: slideInFromTop 0.5s ease-out;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #10b981;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #18181b;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #10b981;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
