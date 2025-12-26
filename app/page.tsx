@@ -1,6 +1,7 @@
 import ImcCalculator from '@/components/imc/ImcCalculator';
 import ThemeToggle from '@/components/ThemeToggle';
-
+import Link from 'next/link';
+import { UtensilsCrossed } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -23,8 +24,16 @@ export default function Home() {
             </span>
           </div>
 
-          {/* Toggle de tema */}
-          <ThemeToggle />
+          {/* Navigation and Theme Toggle */}
+          <div className="flex items-center gap-3">
+            <Link href="/meal-plan">
+              <button className="group flex items-center gap-2 rounded-xl border border-emerald-600 bg-emerald-50 px-4 py-2.5 font-semibold text-emerald-700 transition-all hover:bg-emerald-600 hover:text-white dark:border-emerald-500 dark:bg-emerald-950 dark:text-emerald-400 dark:hover:bg-emerald-600 dark:hover:text-white">
+                <UtensilsCrossed className="h-5 w-5" />
+                <span className="hidden sm:inline">Plan de Comidas</span>
+              </button>
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 

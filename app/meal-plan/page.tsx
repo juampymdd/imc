@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { recipesData, Recipe, MealType } from '@/lib/recipes';
-import { Sunrise, Sun, Apple, Moon, RefreshCw, Calculator, Flame, Beef, Wheat, Droplet, ClipboardList, BookOpen, Lightbulb } from 'lucide-react';
+import { Sunrise, Sun, Apple, Moon, RefreshCw, Calculator, Flame, Beef, Wheat, Droplet, ClipboardList, BookOpen, Lightbulb, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 // Función para obtener una receta aleatoria de un tipo específico
 function getRandomRecipe(mealType: MealType, excludeId?: string): Recipe {
@@ -122,6 +123,16 @@ export default function MealPlanPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 p-4 pb-12">
+      {/* Back button */}
+      <div>
+        <Link href="/">
+          <button className="group flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Volver al IMC
+          </button>
+        </Link>
+      </div>
+
       {/* Header */}
       <div className="text-center">
         <h1 className="flex items-center justify-center gap-3 text-3xl font-bold text-zinc-900 dark:text-zinc-100 md:text-4xl">
