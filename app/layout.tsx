@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,8 +15,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Calculadora de IMC - Índice de Masa Corporal",
-  description: "Calculá tu Índice de Masa Corporal (IMC) de forma rápida y precisa. Soporta kg/lb y cm/pulgadas con resultados detallados y recomendaciones personalizadas.",
-  keywords: ["IMC", "calculadora", "índice de masa corporal", "salud", "peso", "altura"],
+  description:
+    "Calculá tu Índice de Masa Corporal (IMC) de forma rápida y precisa. Soporta kg/lb y cm/pulgadas con resultados detallados y recomendaciones personalizadas.",
+  keywords: [
+    "IMC",
+    "calculadora",
+    "índice de masa corporal",
+    "salud",
+    "peso",
+    "altura",
+  ],
 };
 
 export default function RootLayout({
@@ -30,9 +37,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
