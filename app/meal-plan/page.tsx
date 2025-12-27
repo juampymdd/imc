@@ -143,12 +143,17 @@ export default function MealPlanPage() {
 
   if (!meals) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Generando tu plan de comidas...
-          </p>
+      <div className="relative min-h-screen bg-gradient-to-br from-zinc-50 via-white to-zinc-100 transition-colors dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
+        {/* Patrón decorativo de fondo */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(16,185,129,0.1),rgba(255,255,255,0))] dark:bg-[radial-gradient(circle_at_50%_120%,rgba(16,185,129,0.05),rgba(0,0,0,0))]" />
+
+        <div className="flex min-h-screen items-center justify-center relative">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-emerald-500 border-t-transparent"></div>
+            <p className="text-zinc-600 dark:text-zinc-400">
+              Generando tu plan de comidas...
+            </p>
+          </div>
         </div>
       </div>
     );
