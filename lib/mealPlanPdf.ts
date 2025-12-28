@@ -3,33 +3,37 @@ import type { Recipe, MealType } from "./recipes";
 export type DailyMeals = Record<MealType, Recipe>;
 
 export async function downloadMealPlanPdf(meals: DailyMeals) {
-  const pdfMakeModule = await import("pdfmake/build/pdfmake");
-  const pdfFontsModule = await import("pdfmake/build/vfs_fonts");
-  const pdfMake: any = pdfMakeModule.default || pdfMakeModule;
-  const pdfFonts: any = pdfFontsModule.default || pdfFontsModule;
-
-  // pdfmake's vfs export shape varies across builds; handle common variants
-  try {
-    if (typeof pdfMake.addVirtualFileSystem === "function") {
-      // some builds export a helper to register vfs directly
-      pdfMake.addVirtualFileSystem(pdfFonts);
-    } else if (pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
-      pdfMake.vfs = pdfFonts.pdfMake.vfs;
-    } else if (pdfFonts && pdfFonts.vfs) {
-      pdfMake.vfs = pdfFonts.vfs;
-    } else {
-      // fallback: assume the imported module is the vfs object itself
-      pdfMake.vfs = pdfFonts;
-    }
-  } catch (err) {
-    // If something goes wrong, surface a helpful error in console and rethrow
-    // so the calling code can handle it if needed.
-    console.error("Failed to configure pdfMake vfs:", err, {
-      pdfMake,
-      pdfFonts,
-    });
-    throw err;
+  // PDF generation only runs in the browser; load pdfMake from CDN dynamically to avoid bundler issues
+  if (typeof window === "undefined") {
+    throw new Error("PDF generation is only supported in the browser.");
   }
+
+  async function ensurePdfMake(): Promise<any> {
+    const w: any = window;
+    if (w.pdfMake) return w.pdfMake;
+
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src =
+        "https://cdn.jsdelivr.net/npm/pdfmake@0.2.21/build/pdfmake.min.js";
+      script.onload = () => {
+        const s2 = document.createElement("script");
+        s2.src =
+          "https://cdn.jsdelivr.net/npm/pdfmake@0.2.21/build/vfs_fonts.js";
+        s2.onload = () => resolve();
+        s2.onerror = () =>
+          reject(new Error("Failed to load pdfmake vfs_fonts.js"));
+        document.head.appendChild(s2);
+      };
+      script.onerror = () => reject(new Error("Failed to load pdfmake.js"));
+      document.head.appendChild(script);
+    });
+
+    if (!w.pdfMake) throw new Error("pdfMake not available after script load");
+    return w.pdfMake;
+  }
+
+  const pdfMake: any = await ensurePdfMake();
 
   const dateStr = new Date().toLocaleString();
 
