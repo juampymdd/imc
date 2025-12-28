@@ -88,7 +88,6 @@ export async function downloadMealPlanPdf(meals: DailyMeals) {
     totals.carbs += Number(meal.macros?.carbs || 0);
     totals.fat += Number(meal.macros?.fat || 0);
 
-
     tableBody.push([
       { text: mealLabel, style: "mealTitle" },
       { text: meal.name, style: "mealName" },
@@ -112,7 +111,7 @@ export async function downloadMealPlanPdf(meals: DailyMeals) {
     { text: String(totals.carbs), style: "totals", alignment: "right" },
     { text: String(totals.fat), style: "totals", alignment: "right" },
     { text: "", style: "totals" },
-    { text: "", style: "totals" }
+    { text: "", style: "totals" },
   ]);
 
   const docDefinition: any = {

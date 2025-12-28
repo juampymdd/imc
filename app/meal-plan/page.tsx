@@ -83,7 +83,7 @@ export default function MealPlanPage() {
 
   const downloadPdf = async () => {
     if (!meals) return;
-    const { downloadMealPlanPdf } = await import('@/lib/mealPlanPdf');
+    const { downloadMealPlanPdf } = await import("@/lib/mealPlanPdf");
     downloadMealPlanPdf(meals as any);
   };
 
