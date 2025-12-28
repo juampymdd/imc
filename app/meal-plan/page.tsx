@@ -17,6 +17,7 @@ import {
   BookOpen,
   Lightbulb,
   ArrowLeft,
+  Download,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -80,11 +81,21 @@ type DailyMeals = {
 export default function MealPlanPage() {
   const [meals, setMeals] = useState<DailyMeals | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const downloadPdf = async () => {
-    if (!meals) return;
-    const { downloadMealPlanPdf } = await import("@/lib/mealPlanPdf");
-    downloadMealPlanPdf(meals as any);
+    if (!meals || isDownloading) return;
+    setIsDownloading(true);
+    try {
+      const { downloadMealPlanPdf } = await import("@/lib/mealPlanPdf");
+      await downloadMealPlanPdf(meals as any);
+    } catch (err) {
+      console.error(err);
+      // Simple user feedback
+      alert("Error al generar el PDF. Revisá la consola para más detalles.");
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   // Generar plan de comidas aleatorio al cargar
@@ -211,10 +222,38 @@ export default function MealPlanPage() {
 
           <button
             onClick={() => downloadPdf()}
-            className="rounded-xl border border-zinc-200 bg-white px-6 py-3 font-semibold text-zinc-900 transition-all hover:bg-zinc-50 active:scale-95 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+            disabled={isDownloading}
+            aria-busy={isDownloading}
+            className={`rounded-xl border border-zinc-200 bg-white px-6 py-3 font-semibold text-zinc-900 transition-all hover:bg-zinc-50 active:scale-95 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 ${
+              isDownloading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             title="Descargar plan en PDF"
           >
-            Descargar PDF
+            {isDownloading ? (
+              <svg
+                className="h-4 w-4 mr-2 inline-block animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+            ) : (
+              <Download className="h-4 w-4 mr-2 inline-block" />
+            )}
+            {isDownloading ? "Generando PDF..." : "Descargar PDF"}
           </button>
         </div>
 
