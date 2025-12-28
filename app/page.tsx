@@ -51,36 +51,7 @@ export default function Home() {
         <ImcCalculator />
       </main>
 
-      {/* Footer */}
-      <footer className="relative border-t border-zinc-200 bg-white/50 backdrop-blur-sm dark:border-zinc-800 dark:bg-zinc-900/50">
-        <div className="mx-auto max-w-6xl px-4 py-6">
-          <div className="flex flex-col items-center justify-between gap-4 text-sm text-zinc-600 dark:text-zinc-400 sm:flex-row">
-            <p>© 2025 Calculadora de IMC. Todos los derechos reservados.</p>
-            <div className="flex items-center gap-4">
-              <a
-                href="#"
-                className="transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
-              >
-                Sobre nosotros
-              </a>
-              <span className="text-zinc-300 dark:text-zinc-700">•</span>
-              <a
-                href="#"
-                className="transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
-              >
-                Privacidad
-              </a>
-              <span className="text-zinc-300 dark:text-zinc-700">•</span>
-              <a
-                href="#"
-                className="transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
-              >
-                Contacto
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* Footer removed as requested */}
     </div>
   );
 }
