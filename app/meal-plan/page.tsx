@@ -81,6 +81,12 @@ export default function MealPlanPage() {
   const [meals, setMeals] = useState<DailyMeals | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
+  const downloadPdf = async () => {
+    if (!meals) return;
+    const { downloadMealPlanPdf } = await import('@/lib/mealPlanPdf');
+    downloadMealPlanPdf(meals as any);
+  };
+
   // Generar plan de comidas aleatorio al cargar
   useEffect(() => {
     generateAllMeals();
@@ -187,7 +193,7 @@ export default function MealPlanPage() {
         </div>
 
         {/* Botón generar todo */}
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center gap-4">
           <button
             onClick={generateAllMeals}
             disabled={isGenerating}
@@ -201,6 +207,14 @@ export default function MealPlanPage() {
               }`}
             />
             {isGenerating ? "Generando..." : "Generar Nuevo Plan Completo"}
+          </button>
+
+          <button
+            onClick={() => downloadPdf()}
+            className="rounded-xl border border-zinc-200 bg-white px-6 py-3 font-semibold text-zinc-900 transition-all hover:bg-zinc-50 active:scale-95 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+            title="Descargar plan en PDF"
+          >
+            Descargar PDF
           </button>
         </div>
 
